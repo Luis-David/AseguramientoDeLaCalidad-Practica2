@@ -1,0 +1,78 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.5.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+
+
+
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+
+apply plugin: "jacoco"
+apply plugin: 'pmd'
+
+
+
+group = 'mx.edu.uacm'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.0.RELEASE'
+
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile("org.thymeleaf:thymeleaf-spring5")
+	compile("com.h2database:h2")
+	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
+	compile("mysql:mysql-connector-java:5.1.31")
+}
+
+jacocoTestReport {
+   reports {
+       xml.enabled false
+       csv.enabled false
+       html.destination file("${buildDir}/jacocoHtml")
+   }
+}
+
+pmd {
+  ignoreFailures = true
+   pmdTest.enabled=false
+   ruleSets = [
+           'java-basic',
+           'java-braces',
+           'java-clone',
+           'java-codesize',
+           'java-comments',
+           'java-controversial',
+           'java-coupling',
+           'java-design',
+           'java-empty',
+           'java-finalizers',
+           'java-imports',
+           'java-optimizations',
+           'java-strictexception',
+           'java-strings',
+           'java-typeresolution',
+           'java-unnecessary',
+           'java-unusedcode'
+   ]
+}

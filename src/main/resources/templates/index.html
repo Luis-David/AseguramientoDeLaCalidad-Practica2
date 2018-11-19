@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form th:action="@{/agregar}" method="POST">
+		<p>matricula</p>
+		<input type="text" name="matricula"/>
+		<p>nombre:</p>
+		<input type="text" name="nombre"/>
+		
+		<p>apellidos:</p>
+		<input type="text" name="apellidos"/>
+		<input type="submit" value="Registrar"/>
+	</form>
+</body>
+</html>
