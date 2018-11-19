@@ -4,9 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import mx.edu.uacm.domain.Estudiante;
 import mx.edu.uacm.services.EstudianteService;
@@ -47,4 +49,16 @@ public class EstudianteController {
 			return "redirect:index";
 		return "redirect:error";
 	}
+	@GetMapping("/obtener")
+	public String  obtenerEstudiante(Model model,String idMatricula) {
+		Estudiante estudiante;
+		
+		estudiante=estudianteService.obtenerEstudiante(idMatricula);
+		if(estudiante!=null) {
+			model.addAttribute("estudiante",estudiante);
+			return "infoEstudiante";
+		}
+		return "error";
+	}
+	
 }

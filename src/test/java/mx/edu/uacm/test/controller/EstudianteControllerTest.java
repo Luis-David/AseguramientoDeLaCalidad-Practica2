@@ -2,7 +2,11 @@ package mx.edu.uacm.test.controller;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
 import org.apache.logging.log4j.LogManager;
@@ -37,7 +41,7 @@ public class EstudianteControllerTest {
 					.param("nombre", "Juan")
 					.param("apellidos", "Perez Romiro")).andExpect(redirectedUrl("index"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			Assert.fail();
 			e.printStackTrace();
 		}
 	}
@@ -58,7 +62,39 @@ public class EstudianteControllerTest {
 			Assert.assertThat(estudiante.getNombre(), is(equalTo("Pablo Tomas")));
 			log.debug("nom: "+estudiante.getNombre());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			Assert.fail();
+			e.printStackTrace();
+		}
+	}
+	@Test
+	public void testEliminarEstudiante() {
+		Estudiante estudiante;
+		log.debug("Entrando al metodo testActualizarEstudiante" );
+		try {
+			mvc.perform(post("/estudiante/agregar").param("matricula", "13-003-1240")
+					.param("nombre", "Pablo")
+					.param("apellidos", "Jerez Oro")).andExpect(redirectedUrl("index"));
+			
+			mvc.perform(post("/estudiante/eliminar").param("matricula", "13-003-1240"))
+					.andExpect(redirectedUrl("index"));
+			estudiante=estudianteService.obtenerEstudiante("13-003-1240");
+			
+			Assert.assertThat(estudiante, is(nullValue()));
+		} catch (Exception e) {
+			Assert.fail();
+			e.printStackTrace();
+		}
+	}
+	@Test
+	public void testObtenerEstudiante() {
+		try {
+			mvc.perform(post("/estudiante/agregar").param("matricula", "13-003-1234")
+					.param("nombre", "Jose")
+					.param("apellidos", "Buen Dia")).andExpect(redirectedUrl("index"));
+			mvc.perform(get("/estudiante/obtener").param("idMatricula","13-003-1234"))
+					.andExpect(model().attribute("estudiante",is(notNullValue())));
+		} catch (Exception e) {
+			Assert.fail();
 			e.printStackTrace();
 		}
 	}
