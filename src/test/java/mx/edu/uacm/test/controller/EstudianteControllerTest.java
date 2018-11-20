@@ -1,8 +1,8 @@
 package mx.edu.uacm.test.controller;
-
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hamcrest.beans.HasProperty;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -92,7 +93,12 @@ public class EstudianteControllerTest {
 					.param("nombre", "Jose")
 					.param("apellidos", "Buen Dia")).andExpect(redirectedUrl("index"));
 			mvc.perform(get("/estudiante/obtener").param("idMatricula","13-003-1234"))
-					.andExpect(model().attribute("estudiante",is(notNullValue())));
+					.andExpect(model().attribute("estudiante"
+							,allOf(
+									hasProperty("matricula",is("13-003-1234"))
+									,hasProperty("nombre",is("Jose"))
+									,hasProperty("apellidos",is("Buen Dia")))));
+			
 		} catch (Exception e) {
 			Assert.fail();
 			e.printStackTrace();
