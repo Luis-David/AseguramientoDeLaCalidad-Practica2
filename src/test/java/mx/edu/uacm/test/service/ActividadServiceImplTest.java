@@ -25,6 +25,6 @@ public class ActividadServiceImplTest {
 		a.setCategoria("Escolar");
 		a.setNombre("Futbol");
 		
-		actividadService.guardaActividad(a);
+		actividadService.guardarActividad(a);
 	}
 }

@@ -42,6 +42,14 @@ public class Actividad {
 	public void setEstudiante(Estudiante estudiante) {
 		this.estudiante = estudiante;
 	}
-	
+	@Override
+	public boolean equals(Object o) {
+		Actividad a=(Actividad)o;
+		if(nombre.equals(a.getNombre())
+				&& categoria.equals(a.getCategoria())
+				&& id==a.getId())
+			return true;
+		return false;
+	}
 	
 }

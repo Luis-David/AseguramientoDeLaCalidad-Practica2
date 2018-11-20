@@ -2,6 +2,10 @@ package mx.edu.uacm.services.impl;
 
 
 
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +27,7 @@ public class ActividadServiceImpl implements ActividadService{
 	@Autowired
 	private ActividadRepository actividadRepository;
 	@Override
-	public Actividad guardaActividad(Actividad vehiculo) {
+	public Actividad guardarActividad(Actividad vehiculo) {
 		
 		return actividadRepository.save(vehiculo);
 	}
@@ -41,5 +45,23 @@ public class ActividadServiceImpl implements ActividadService{
 		}
 		return false;
 	}
-
+	@Override
+	public Actividad obtenerActividad(Long idActividad) {
+		Optional<Actividad> op=actividadRepository.findById(idActividad);
+		Actividad actividad;
+		try {
+			actividad=op.get();
+		}catch(NoSuchElementException e) {
+			return null;
+		}
+		return actividad;
+	}
+	@Override
+	public ArrayList<Actividad> obtenerActividades() {
+		Iterable<Actividad> it = actividadRepository.findAll();
+		ArrayList<Actividad> actividades=new ArrayList<Actividad>();
+		it.iterator().forEachRemaining(actividades::add);
+		return actividades;
+	}
+	
 }

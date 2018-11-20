@@ -53,7 +53,7 @@ jacocoTestReport {
    }
 }
 
-pmd {
+pmdTest{
   ignoreFailures = true
    pmdTest.enabled=false
    ruleSets = [
