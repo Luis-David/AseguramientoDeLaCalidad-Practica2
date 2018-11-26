@@ -37,11 +37,13 @@ public class ActividadServiceImpl implements ActividadService{
 	}
 	@Override
 	public boolean eliminarActividad(Actividad actividad) {
-		try {
+		Actividad a;
+		if(actividad !=null) {
 			actividadRepository.delete(actividad);
-			return true;
-		}catch(IllegalArgumentException e) {
-			log.warn(""+e.getMessage());
+			a=obtenerActividad(actividad.getId());
+			if(a==null) {
+				return true;
+			}
 		}
 		return false;
 	}

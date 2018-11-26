@@ -25,15 +25,14 @@ public class EstudianteServiceImpl implements EstudianteService{
 	@Override
 	public boolean eliminarEstudiante(Estudiante estudiante) {
 		Estudiante eliminado;
-		try {
-			estudianteBD.delete(estudiante);
-			eliminado=estudianteBD.obtenerEstudiante(estudiante.getMatricula());
-			if(eliminado==null)
-				return true;
-		}catch(IllegalArgumentException e) {
-			log.warn(""+e.getMessage());
+		boolean exito=false;
+		estudianteBD.delete(estudiante);
+		eliminado=estudianteBD.obtenerEstudiante(estudiante.getMatricula());
+		if(eliminado==null){
+			log.info("Se elimino un estudiante");
+			exito=true;
 		}
-		return false;
+		return exito;
 	}
 	@Override
 	public Estudiante obtenerEstudiante(String idEstudiante) {

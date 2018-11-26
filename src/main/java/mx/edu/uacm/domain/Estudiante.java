@@ -16,8 +16,8 @@ public class Estudiante {
 	private String matricula;
 	private String nombre;
 	private String apellidos;
-	@OneToMany(mappedBy="estudiante",cascade=CascadeType.ALL,orphanRemoval=true,
-			fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="estudiante",cascade=CascadeType.ALL,
+			fetch=FetchType.EAGER)
 	private List<Actividad> actividades;
 	public Estudiante(String m,String n,String a) {
 		matricula=m;
@@ -60,11 +60,28 @@ public class Estudiante {
 	@Override
 	public boolean equals(Object o) {
 		Estudiante e=(Estudiante)o;
+		boolean exito=false;
 		if(this.nombre.equals(e.getNombre())
 				&& this.matricula.equals(e.getMatricula())
 				&& this.apellidos.equals(e.getApellidos())) {
-			return true;
+			if(actividades.size()==e.getActividades().size()) {
+				exito=true;
+				for(Actividad a: actividades){
+					for(Actividad a2: e.getActividades()) {
+						exito=false;
+						if(a.equals(a2)) {
+							exito=true;
+							break;
+						}
+					}
+					if(!exito)
+						break;
+				}
+			}
+			else {
+				exito=false;
+			}
 		}
-		return false;
+		return exito;
 	}
 }

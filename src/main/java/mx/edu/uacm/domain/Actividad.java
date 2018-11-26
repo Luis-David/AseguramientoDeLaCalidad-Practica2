@@ -16,8 +16,15 @@ public class Actividad {
 	private String categoria;/*
 	@OneToMany(mappedBy="Actividad",cascade=CascadeType.ALL,orphanRemoval=true,
 			fetch=FetchType.LAZY)*/
-	@ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
 	private Estudiante estudiante;
+	public Actividad() {
+		
+	}
+	public Actividad(String n,String c) {
+		nombre=n;
+		categoria=c;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -47,8 +54,14 @@ public class Actividad {
 		Actividad a=(Actividad)o;
 		if(nombre.equals(a.getNombre())
 				&& categoria.equals(a.getCategoria())
-				&& id==a.getId())
-			return true;
+				&& id==a.getId()) {
+			if(estudiante==a.getEstudiante()) {
+				return true;
+			}
+			else if(estudiante.getMatricula().equals(a.getEstudiante().getMatricula())) {
+				return true;
+			}
+		}
 		return false;
 	}
 	
