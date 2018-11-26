@@ -22,7 +22,7 @@ apply plugin: 'io.spring.dependency-management'
 
 apply plugin: "jacoco"
 apply plugin: 'pmd'
-
+apply plugin: 'checkstyle'
 
 
 group = 'mx.edu.uacm'
@@ -53,7 +53,7 @@ jacocoTestReport {
    }
 }
 
-pmdTest{
+pmd{
   ignoreFailures = true
    pmdTest.enabled=false
    ruleSets = [
@@ -76,3 +76,5 @@ pmdTest{
            'java-unusedcode'
    ]
 }
+
+
