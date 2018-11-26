@@ -40,7 +40,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compile("org.thymeleaf:thymeleaf-spring5")
-	compile("com.h2database:h2")
+	//compile("com.h2database:h2")
 	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
 	compile("mysql:mysql-connector-java:5.1.31")
 }
