@@ -78,3 +78,25 @@ pmd{
 }
 
 
+
+checkstyle { 
+    toolVersion = '6.4.1' 
+    sourceSets = [sourceSets.main] 
+    configFile = rootProject.file("config/checkstyle/checkstyle.xml"); 
+    showViolations = true 
+    ignoreFailures = true 
+} 
+
+checkstyleTest { 
+    enabled = false 
+} 
+
+tasks.withType(Checkstyle) { 
+    reports { 
+    html.destination rootProject.file("build/reports/checkstyle.html") 
+    } 
+} 
+
+
+
+
