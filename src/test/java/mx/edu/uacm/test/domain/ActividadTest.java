@@ -34,7 +34,7 @@ public class ActividadTest {
 		estudiante.setApellidos("Ramirez");
 		actividad.setEstudiante(estudiante);
 		actividadActual=actividadRepository.save(actividad);
-		Assert.assertNotNull(actividadActual);
+		Assert.assertNotNull(actividadActual.getId());
 	}
 	
 	@Test
